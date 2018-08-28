@@ -1,6 +1,6 @@
 #!/bin/sh
 
-NODE_VERSION=v4.2.1
+NODE_VERSION=v8.11.4
 # Set PROG_ARCH
 if [ `uname -m` == "x86_64" ]; then
     PROG_ARCH=`uname | tr [A-Z] [a-z]`-x64
@@ -9,7 +9,7 @@ else
 fi
 
 # Version should increment up if a script should perform an update to current installs. (int)
-INSTALL_SCRIPT_VERSION=1
+INSTALL_SCRIPT_VERSION=2
 HOST_ARCH=`uname | tr [A-Z] [a-z]`-`uname -m`
 PROG_NAME='nodejs'
 fullName=node-$NODE_VERSION-$PROG_ARCH
