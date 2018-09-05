@@ -8,7 +8,7 @@ if [ `uname` == "Linux" ]; then
     else
         OS=`lsb_release -a | grep 'Red Hat Enterprise Linux' | grep 'release 7'`
 	if [ ! -z "$OS" ]; then
-            MONGO_DB_VERSION=rhel70-4.0.2
+            MONGO_DB_VERSION=rhel70-3.0.7
         fi 
     fi
     
