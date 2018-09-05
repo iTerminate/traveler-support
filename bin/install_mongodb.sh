@@ -5,7 +5,13 @@ if [ `uname` == "Linux" ]; then
     OS=`lsb_release -a | grep 'Red Hat Enterprise Linux' | grep 'release 6'`
     if [ ! -z "$OS" ]; then 
 	MONGO_DB_VERSION=rhel62-3.0.7
-    fi 
+    else
+        OS=`lsb_release -a | grep 'Red Hat Enterprise Linux' | grep 'release 7'`
+	if [ ! -z "$OS" ]; then
+            MONGO_DB_VERSION=rhel70-4.0.2
+        fi 
+    fi
+    
     HOST_ARCH=`uname | tr [A-Z] [a-z]`-`uname -m`
     DIST_PATH=`uname | tr [A-Z] [a-z]`
 # Check darwin distributions 
@@ -21,7 +27,7 @@ if [ -z $MONGO_DB_VERSION ]; then
 fi
 
 # Version should increment up if a script should perform an update to current installs. (int)
-INSTALL_SCRIPT_VERSION=1
+INSTALL_SCRIPT_VERSION=2
 PROG_NAME='mongodb'
 ARCHIVE_EXTENSION=tgz
 fullName=mongodb-$HOST_ARCH-$MONGO_DB_VERSION
