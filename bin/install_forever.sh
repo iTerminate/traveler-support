@@ -1,7 +1,7 @@
 #!/bin/sh
 
 PROG_NAME='forever'
-PROG_VERSION=0.15.1
+PROG_VERSION=2.0.0
 HOST_ARCH=`uname | tr [A-Z] [a-z]`-`uname -m`
 # Version should increment up if a script should perform an update to current installs. (int)
 INSTALL_SCRIPT_VERSION=1
