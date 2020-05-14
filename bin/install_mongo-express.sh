@@ -2,11 +2,11 @@
 
 
 PROG_NAME='mongo-express'
-PROG_VERSION=0.23.6
+PROG_VERSION=0.54.0
 HOST_ARCH=`uname | tr [A-Z] [a-z]`-`uname -m`
 
 # Version should increment up if a script should perform an update to current installs. (int)
-INSTALL_SCRIPT_VERSION=1
+INSTALL_SCRIPT_VERSION=2
 currentDir=`pwd`
 cd `dirname $0`/.. && topDir=`pwd`
 
@@ -25,7 +25,7 @@ fi
 if [ -d $fullInstallDir ]; then
 	if [ $INSTALL_SCRIPT_VERSION -gt `cat $INSTALL_SCRIPT_VERSION_PATH` ]; then 
 		echo "$PROG_NAME needs to be updated"
-	elif [ "x$1" == "x--force" ]; then 
+	elif [ "x$1" = "x--force" ]; then 
     	echo "[WARNING] It appears that $PROG_NAME is already installed." >&2
     	echo "Would you like to remove the current installation of $PROG_NAME at $fullInstallDir"
 		read -p "Remove and Continue (y/n)? " response
@@ -40,7 +40,7 @@ if [ -d $fullInstallDir ]; then
 		esac
 	else 
 		echo "$PROG_NAME is already installed with the latest script"
-		if [ ! x$1 == "x--silent" ]; then 
+		if [ ! "x$1" = "x--silent" ]; then 
 			echo "Running the install script with the switch --force to override install"
 		fi
 		exit 1
@@ -49,7 +49,7 @@ else
 	echo "$PROG_NAME needs to be installed"
 fi 
 
-if [ x$1 == "x--silent" ]; then 
+if [ "x$1" = "x--silent" ]; then 
 	exit 0
 else
 	echo "removing directory $fullInstallDir"

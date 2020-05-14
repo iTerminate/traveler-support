@@ -1,23 +1,40 @@
-#!/bin/sh
+#!/bin/bash
 
 # Check linux distriubtions 
-if [ `uname` == "Linux" ]; then
-    OS=`lsb_release -a | grep 'Red Hat Enterprise Linux' | grep 'release 6'`
-    if [ ! -z "$OS" ]; then 
-	MONGO_DB_VERSION=rhel62-3.0.7
-    else
-        OS=`lsb_release -a | grep 'Red Hat Enterprise Linux' | grep 'release 7'`
-	if [ ! -z "$OS" ]; then
-            MONGO_DB_VERSION=rhel70-3.0.7
-        fi 
-    fi
-    
+if [ `uname` = "Linux" ]; then
+	if [ -f /etc/centos-release ]; then 
+		CENTOS_RELEASE=`cat /etc/centos-release`
+
+		if [[ $CENTOS_RELEASE == *"release 8"* ]]; then
+			CODENAME="Ootpa"
+		elif [[ $CENTOS_RELEASE == *"release 7"* ]]; then
+			CODENAME="Maipo"
+		elif [[ $CENTOS_RELEASE == *"release 6"* ]]; then
+			CODENAME="Santiago"
+		fi
+	else
+    	CODENAME=`lsb_release -sc`
+	fi 
+
+	# RHEL 6
+    if [ $CODENAME = "Santiago" ]; then
+		MONGO_DB_VERSION=rhel62-4.2.6
+	# RHEL 7
+	elif [ $CODENAME = "Maipo" ]; then
+		MONGO_DB_VERSION=rhel70-4.2.6
+	# RHEL 8
+	elif [ $CODENAME = "Ootpa" ]; then
+		MONGO_DB_VERSION=rhel80-4.2.6
+	# Ubuntu 20.04, 19.10, or 18.04
+	elif [ $CODENAME = "focal" -o $CODENAME = "eoan" -o $CODENAME = "bionic" ]; then
+		MONGO_DB_VERSION=ubuntu1804-4.2.6
+	fi 
     HOST_ARCH=`uname | tr [A-Z] [a-z]`-`uname -m`
     DIST_PATH=`uname | tr [A-Z] [a-z]`
 # Check darwin distributions 
 elif [ `uname` == "Darwin" ]; then
     HOST_ARCH=osx-`uname -m`
-    MONGO_DB_VERSION=3.0.7
+    MONGO_DB_VERSION=4.2.6
     DIST_PATH=osx
 fi
 
@@ -47,7 +64,7 @@ DOWNLOAD_URL=https://fastdl.mongodb.org/$DIST_PATH/$fullName.$ARCHIVE_EXTENSION
 if [ -d $fullInstallDir ]; then
 	if [ $INSTALL_SCRIPT_VERSION -gt `cat $INSTALL_SCRIPT_VERSION_PATH` ]; then 
 		echo "$PROG_NAME needs to be updated"
-	elif [ "x$1" == "x--force" ]; then 
+	elif [ "x$1" = "x--force" ]; then 
     	echo "[WARNING] It appears that $PROG_NAME is already installed." >&2
     	echo "Would you like to remove the current installation of $PROG_NAME at $fullInstallDir"
 		read -p "Remove and Continue (y/n)? " response
@@ -62,7 +79,7 @@ if [ -d $fullInstallDir ]; then
 		esac
 	else 
 		echo "$PROG_NAME is already installed with the latest script"
-		if [ ! x$1 == "x--silent" ]; then 
+		if [ ! "x$1" = "x--silent" ]; then 
 			echo "Running the install script with the switch --force to override install"
 		fi
 		exit 1
@@ -71,7 +88,7 @@ else
 	echo "$PROG_NAME needs to be installed"
 fi 
 
-if [ x$1 == "x--silent" ]; then 
+if [ "x$1" = "x--silent" ]; then 
 	exit 0
 else
 	echo "removing directory $fullInstallDir"

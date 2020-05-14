@@ -2,7 +2,7 @@
 
 NODE_VERSION=v12.15.0
 # Set PROG_ARCH
-if [ `uname -m` == "x86_64" ]; then
+if [ `uname -m` = "x86_64" ]; then
     PROG_ARCH=`uname | tr [A-Z] [a-z]`-x64
 else
     PROG_ARCH=`uname | tr [A-Z] [a-z]`-`uname -m`
@@ -29,7 +29,7 @@ DOWNLOAD_URL=https://nodejs.org/dist/$NODE_VERSION/$fullName.$ARCHIVE_EXTENSION
 if [ -d $fullInstallDir ]; then
 	if [ $INSTALL_SCRIPT_VERSION -gt `cat $INSTALL_SCRIPT_VERSION_PATH` ]; then 
 		echo "$PROG_NAME needs to be updated"
-	elif [ "x$1" == "x--force" ]; then 
+	elif [ "x$1" = "x--force" ]; then 
     	echo "[WARNING] It appears that $PROG_NAME is already installed." >&2
     	echo "Would you like to remove the current installation of $PROG_NAME at $fullInstallDir"
 		read -p "Remove and Continue (y/n)? " response
@@ -44,7 +44,7 @@ if [ -d $fullInstallDir ]; then
 		esac
 	else 
 		echo "$PROG_NAME is already installed with the latest script"
-		if [ ! x$1 == "x--silent" ]; then 
+		if [ ! "x$1" = "x--silent" ]; then 
 			echo "Running the install script with the switch --force to override install"
 		fi
 		exit 1
@@ -53,7 +53,7 @@ else
 	echo "$PROG_NAME needs to be installed"
 fi 
 
-if [ x$1 == "x--silent" ]; then 
+if [ "x$1" = "x--silent" ]; then 
 	exit 0
 else
 	echo "removing directory $fullInstallDir"
