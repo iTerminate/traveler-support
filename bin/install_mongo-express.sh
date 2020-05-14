@@ -15,6 +15,9 @@ installDir=$topDir/nodejs
 fullInstallDir=$installDir/node_modules/$PROG_NAME
 INSTALL_SCRIPT_VERSION_PATH=$fullInstallDir/installScriptVersion
 
+# Point to the nodejs install 
+export PATH=$nodejsDir/bin:$PATH
+
 if [ -d $installDir ]; then
     cd $installDir
 else
