@@ -33,7 +33,7 @@ if [ `uname` = "Linux" ]; then
     DIST_PATH=`uname | tr [A-Z] [a-z]`
 # Check darwin distributions 
 elif [ `uname` == "Darwin" ]; then
-    HOST_ARCH=osx-`uname -m`
+    HOST_ARCH=macos-`uname -m`
     MONGO_DB_VERSION=4.2.6
     DIST_PATH=osx
 fi
