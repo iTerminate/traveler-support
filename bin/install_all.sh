@@ -7,6 +7,6 @@ cd `dirname $0`/.. && topDir=`pwd`
 binDir=$topDir/bin
 
 $binDir/install_nodejs.sh $1
-$binDir/install_forever.sh $1
+$binDir/install_pm2.sh $1
 $binDir/install_mongo-express.sh $1
 $binDir/install_mongodb.sh $1
