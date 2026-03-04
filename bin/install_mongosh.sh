@@ -83,7 +83,7 @@ cd $installDir
 
 tar zvxf $srcDir/$fullName.$ARCHIVE_EXTENSION
 # rename the directory
-mv mongosh-$MONGOSH_PLATFORM-* $HOST_ARCH
+mv mongosh-*-$MONGOSH_PLATFORM $HOST_ARCH
 
 echo "$PROG_NAME has been installed in $fullInstallDir"
 echo $INSTALL_SCRIPT_VERSION > $INSTALL_SCRIPT_VERSION_PATH
