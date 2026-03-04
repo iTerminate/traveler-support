@@ -99,7 +99,7 @@ cd $installDir
 
 tar zvxf $srcDir/$fullName.$ARCHIVE_EXTENSION
 # rename the directory 
-mv $fullName $HOST_ARCH
+mv mongodb-$HOST_ARCH-* $HOST_ARCH
 
 echo "$PROG_NAME has been installed in $fullInstallDir"
 echo $INSTALL_SCRIPT_VERSION > $INSTALL_SCRIPT_VERSION_PATH
