@@ -8,9 +8,8 @@ if [ `uname` = "Linux" ]; then
             rhel|centos|rocky|almalinux)
                 VERSION_MAJOR=${VERSION_ID%%.*}
                 case "$VERSION_MAJOR" in
-                    9) MONGO_DB_VERSION=rhel90-8.0.19 ;;
-                    8) MONGO_DB_VERSION=rhel80-8.0.19 ;;
-                    7) MONGO_DB_VERSION=rhel70-8.0.19 ;;
+                    9) MONGO_DB_VERSION=rhel93-8.0.19 ;;
+                    8) MONGO_DB_VERSION=rhel8-8.0.19 ;;
                 esac
                 ;;
             ubuntu)
