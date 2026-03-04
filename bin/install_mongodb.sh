@@ -1,40 +1,33 @@
 #!/bin/bash
 
-# Check linux distriubtions 
+# Check linux distributions
 if [ `uname` = "Linux" ]; then
-	if [ -f /etc/centos-release ]; then 
-		CENTOS_RELEASE=`cat /etc/centos-release`
-
-		if [[ $CENTOS_RELEASE == *"release 8"* ]]; then
-			CODENAME="Ootpa"
-		elif [[ $CENTOS_RELEASE == *"release 7"* ]]; then
-			CODENAME="Maipo"
-		elif [[ $CENTOS_RELEASE == *"release 6"* ]]; then
-			CODENAME="Santiago"
-		fi
-	else
-    	CODENAME=`lsb_release -sc`
-	fi 
-
-	# RHEL 6
-    if [ $CODENAME = "Santiago" ]; then
-		MONGO_DB_VERSION=rhel62-4.2.6
-	# RHEL 7
-	elif [ $CODENAME = "Maipo" ]; then
-		MONGO_DB_VERSION=rhel70-4.2.6
-	# RHEL 8
-	elif [ $CODENAME = "Ootpa" ]; then
-		MONGO_DB_VERSION=rhel80-4.2.6
-	# Ubuntu 20.04, 19.10, or 18.04
-	elif [ $CODENAME = "focal" -o $CODENAME = "eoan" -o $CODENAME = "bionic" ]; then
-		MONGO_DB_VERSION=ubuntu1804-4.2.6
-	fi 
+    if [ -f /etc/os-release ]; then
+        source /etc/os-release
+        case "$ID" in
+            rhel|centos|rocky|almalinux)
+                VERSION_MAJOR=${VERSION_ID%%.*}
+                case "$VERSION_MAJOR" in
+                    9) MONGO_DB_VERSION=rhel90-8.0.19 ;;
+                    8) MONGO_DB_VERSION=rhel80-8.0.19 ;;
+                    7) MONGO_DB_VERSION=rhel70-8.0.19 ;;
+                esac
+                ;;
+            ubuntu)
+                case "$VERSION_ID" in
+                    "24.04") MONGO_DB_VERSION=ubuntu2404-8.0.19 ;;
+                    "22.04") MONGO_DB_VERSION=ubuntu2204-8.0.19 ;;
+                    "20.04") MONGO_DB_VERSION=ubuntu2004-8.0.19 ;;
+                esac
+                ;;
+        esac
+    fi
     HOST_ARCH=`uname | tr [A-Z] [a-z]`-`uname -m`
     DIST_PATH=`uname | tr [A-Z] [a-z]`
-# Check darwin distributions 
+# Check darwin distributions
 elif [ `uname` == "Darwin" ]; then
     HOST_ARCH=macos-`uname -m`
-    MONGO_DB_VERSION=4.2.6
+    MONGO_DB_VERSION=8.0.19
     DIST_PATH=osx
 fi
 
@@ -44,7 +37,7 @@ if [ -z $MONGO_DB_VERSION ]; then
 fi
 
 # Version should increment up if a script should perform an update to current installs. (int)
-INSTALL_SCRIPT_VERSION=2
+INSTALL_SCRIPT_VERSION=3
 PROG_NAME='mongodb'
 ARCHIVE_EXTENSION=tgz
 fullName=mongodb-$HOST_ARCH-$MONGO_DB_VERSION
