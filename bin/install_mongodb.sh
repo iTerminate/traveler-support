@@ -37,7 +37,7 @@ fi
 
 # Version should increment up if a script should perform an update to current installs. (int)
 INSTALL_SCRIPT_VERSION=3
-PROG_NAME='mongodb'
+PROG_NAME='mongodb-server'
 ARCHIVE_EXTENSION=tgz
 fullName=mongodb-$HOST_ARCH-$MONGO_DB_VERSION
 # Reset host arch for custom implementations in OSX
